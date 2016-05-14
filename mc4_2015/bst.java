@@ -1,22 +1,50 @@
 import java.util.*;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner cin = new Scanner(System.in);
-
-		int t = cin.nextInt();
+	
+	public static ArrayList<Integer> output = new ArrayList();
+	
+	public static void binary(ArrayList<Integer> input){
+		if(input.size() == 0){
+			return;
+		}
+		else if(input.size() == 1){
+			output.add(input.get(0));
+		}
 		
-		for (int a=1;a<=t;a++){
-			cin.nextInt();
-			int n = cin.nextInt();
-			String num = cin.nextLine();
-			int len = num.length();
-			int val = 0;
-			for (int b=1;b<len;b++){
-				int curr = Integer.parseInt(num.substring(b, b+1));
-				val = (val+curr)%(n-1);
+		else{
+			int root = input.get(0);	
+			
+			ArrayList<Integer> left = new ArrayList();
+			ArrayList<Integer> right = new ArrayList();
+			
+			for(int i = 1 ; i < input.size(); i++){
+				
+				if(input.get(i) < root){
+					left.add(input.get(i));
+				}
+				else if(input.get(i) > root){
+					right.add(input.get(i));
+				}
 			}
-			System.out.println(a+" "+val%(n-1));
+			binary(left);
+			binary(right);
+			output.add(root);
+		}
+		
+	}
+
+	public static void main(String[] args) {
+		
+		ArrayList<Integer> input = new ArrayList();
+		Scanner cin = new Scanner(System.in);
+		
+		while(cin.hasNext()){
+			input.add(cin.nextInt());
+		}
+		binary(input);
+		for(int out = 0 ; out < output.size(); out++){
+			System.out.println(output.get(out));
 		}
 	}
 }
